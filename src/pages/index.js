@@ -1,4 +1,5 @@
 import Head from 'next/head'
+
 import Link from 'next/link';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
@@ -42,7 +43,7 @@ export default function Home({ home, products }) {
           {products.map(product => {
             return (
               <li key={product.slug}>
-                <Link href="#">
+                <Link href={`/products/${product.slug}`}>
                   <a>
                     <div className={styles.productImage}>
                       <img width={product.image.width}  height={product.image.height}  src={product.image.url} alt="" />
