@@ -12,8 +12,6 @@ import products from '@data/products';
 import styles from '@styles/Page.module.scss'
 
 export default function Home({ home, products }) {
-  console.log('home', home)
-  console.log('products', products)
   const { heroTitle, heroText, heroLink, heroBackground } = home;
   return (
     <Layout>
@@ -95,7 +93,7 @@ export async function getStaticProps() {
     slug
     heroBackground
   }
-  products(first: 4) {
+  products(where: {categories_some: {slug: "featured"}}) {
     id
     name
     price
@@ -106,7 +104,6 @@ export async function getStaticProps() {
     `
   })
 
-  console.log('data', data)
   const home = data.data.page;
   const products = data.data.products;
 
