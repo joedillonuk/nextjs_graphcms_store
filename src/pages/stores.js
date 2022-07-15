@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import { FaExternalLinkAlt } from 'react-icons/fa';
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+
 
 import Layout from '@components/Layout';
 import Container from '@components/Container';
@@ -7,7 +9,9 @@ import Button from '@components/Button';
 
 import styles from '@styles/Page.module.scss'
 
-export default function Stores() {
+export default function Stores( storeLocations ) {
+console.log('storeLocations', storeLocations);
+
   return (
     <Layout>
       <Head>
@@ -56,4 +60,36 @@ export default function Stores() {
       </Container>
     </Layout>
   )
+}
+
+export async function getStaticProps() {
+  const client = new ApolloClient({
+    uri: 'https://api-eu-west-2.graphcms.com/v2/cl59yfpuk686r01t3fpmhggiq/master',
+    cache: new InMemoryCache(),
+  });
+
+  const data = await client.query({
+    query: gql`
+      query PageStores {
+  storeLocations {
+    address
+    id
+    name
+    phoneNumber
+    location {
+      latitude
+      longitude
+    }
+  }
+}
+    `
+  })
+
+  const storeLocations = data.data.storeLocations;
+
+  return {
+    props: {
+      storeLocations
+    }
+  }
 }
