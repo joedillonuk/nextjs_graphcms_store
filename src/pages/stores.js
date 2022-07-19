@@ -9,7 +9,7 @@ import Button from '@components/Button';
 
 import styles from '@styles/Page.module.scss'
 
-export default function Stores( storeLocations ) {
+export default function Stores( {storeLocations} ) {
 console.log('storeLocations', storeLocations);
 
   return (
@@ -26,26 +26,32 @@ console.log('storeLocations', storeLocations);
 
           <div className={styles.storesLocations}>
             <ul className={styles.locations}>
-              <li>
+              { storeLocations.map(location => {
+                return (
+                  <li key={location.id}>
                 <p className={styles.locationName}>
-                  Name
+                  {location.name}
                 </p>
                 <address>
-                  Address
+                  {location.address}
                 </address>
                 <p>
-                  1234567890
+                  {location.phoneNumber}
                 </p>
                 <p className={styles.locationDiscovery}>
                   <button>
                     View on Map
                   </button>
-                  <a href="https://www.google.com/maps/" target="_blank" rel="noreferrer">
+                  <a href={`https://www.google.com/maps/dir//${location.location.latitude},${location.location.longitude}/@${location.location.latitude},${location.location.longitude},16z`} target="_blank" rel="noreferrer">
                     Get Directions
                     <FaExternalLinkAlt />
                   </a>
                 </p>
               </li>
+
+                )
+              })}
+              
             </ul>
           </div>
 
