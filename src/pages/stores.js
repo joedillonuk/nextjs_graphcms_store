@@ -6,11 +6,11 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import Layout from '@components/Layout';
 import Container from '@components/Container';
 import Button from '@components/Button';
+import Map from '@components/Map';
 
 import styles from '@styles/Page.module.scss'
 
-export default function Stores( {storeLocations} ) {
-console.log('storeLocations', storeLocations);
+export default function Stores({ storeLocations }) {
 
   return (
     <Layout>
@@ -26,40 +26,65 @@ console.log('storeLocations', storeLocations);
 
           <div className={styles.storesLocations}>
             <ul className={styles.locations}>
-              { storeLocations.map(location => {
+              {storeLocations.map(location => {
                 return (
                   <li key={location.id}>
-                <p className={styles.locationName}>
-                  {location.name}
-                </p>
-                <address>
-                  {location.address}
-                </address>
-                <p>
-                  {location.phoneNumber}
-                </p>
-                <p className={styles.locationDiscovery}>
-                  <button>
-                    View on Map
-                  </button>
-                  <a href={`https://www.google.com/maps/dir//${location.location.latitude},${location.location.longitude}/@${location.location.latitude},${location.location.longitude},16z`} target="_blank" rel="noreferrer">
-                    Get Directions
-                    <FaExternalLinkAlt />
-                  </a>
-                </p>
-              </li>
+                    <p className={styles.locationName}>
+                      {location.name}
+                    </p>
+                    <address>
+                      {location.address}
+                    </address>
+                    <p>
+                      {location.phoneNumber}
+                    </p>
+                    <p className={styles.locationDiscovery}>
+                      <button>
+                        View on Map
+                      </button>
+                      <a href={`https://www.google.com/maps/dir//${location.location.latitude},${location.location.longitude}/@${location.location.latitude},${location.location.longitude},16z`} target="_blank" rel="noreferrer">
+                        Get Directions
+                        <FaExternalLinkAlt />
+                      </a>
+                    </p>
+                  </li>
 
                 )
               })}
-              
+
             </ul>
           </div>
 
           <div className={styles.storesMap}>
             <div className={styles.storesMapContainer}>
-              <div className={styles.map}>
-                Map
-              </div>
+
+              <Map className={styles.map}>
+
+                {({ TileLayer, Marker, Popup }, map) => {
+                  const position = [51.505, -0.09]
+
+                  return (
+                    <>
+                      <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                      />
+                      <Marker position={position}>
+                        <Popup>
+                          A pretty CSS3 popup. <br /> Easily customizable.
+                        </Popup>
+                      </Marker>
+                    </>
+
+                  )
+                }}
+
+
+
+
+
+              </Map>
+
             </div>
           </div>
         </div>
