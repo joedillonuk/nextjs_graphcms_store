@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
@@ -58,6 +59,11 @@ export default function Stores({ storeLocations }) {
           <div className={styles.storesMap}>
             <div className={styles.storesMapContainer}>
 
+ 
+
+
+
+
               <Map className={styles.map}>
 
                 {({ TileLayer, Marker, Popup }, map) => {
@@ -78,10 +84,6 @@ export default function Stores({ storeLocations }) {
 
                   )
                 }}
-
-
-
-
 
               </Map>
 
