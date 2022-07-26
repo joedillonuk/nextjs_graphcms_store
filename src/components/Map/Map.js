@@ -30,6 +30,7 @@ const Map = ({ children, className, ...rest }) => {
   }, []);
 
   return (
+
     <MapContainer className={mapClassName} {...rest}>
       <MapConsumer>
         {(map) => children(ReactLeaflet, map) }
