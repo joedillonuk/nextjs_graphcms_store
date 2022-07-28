@@ -7,7 +7,7 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import Layout from '@components/Layout';
 import Container from '@components/Container';
 import Button from '@components/Button';
-import Map from '@components/Map/index.js';
+import Mymap from '@components/Mymap/index.js';
 
 import styles from '@styles/Page.module.scss'
 
@@ -63,7 +63,7 @@ export default function Stores({ storeLocations }) {
           <div className={styles.storesMap}>
             <div className={styles.storesMapContainer}>
               Map goes here
-
+                  <Mymap />
             </div>
           </div>
         </div>
