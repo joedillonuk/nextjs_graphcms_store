@@ -12,7 +12,7 @@ import Map from '@components/Map';
 import styles from '@styles/Page.module.scss'
 
 
-const position = [51.505, -0.09];
+
 
 
 export default function Stores({ storeLocations }) {
@@ -64,10 +64,9 @@ export default function Stores({ storeLocations }) {
             <div className={styles.storesMapContainer}>
 
               Map goes here
-              <Map className={styles.map}>
+              <Map className={styles.map} center={[0, 0]} zoom={4} scrollWheelZoom={false}>
 
                 {({ TileLayer, Marker, Popup }, map) => {
-                  const position = [51.505, -0.09]
 
                   return (
                     <>
@@ -75,11 +74,23 @@ export default function Stores({ storeLocations }) {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                       />
-                      <Marker position={position}>
-                        <Popup>
-                          A pretty CSS3 popup. <br /> Easily customizable.
-                        </Popup>
-                      </Marker>
+                      {storeLocations.map(location => {
+                        const { latitude, longitude } = location.location;
+
+
+                        return (
+                          <Marker position={[latitude, longitude]}>
+                            <Popup>
+                              <p>{location.name}</p>
+                              <p>{ location.address }</p>
+                            </Popup>
+                          </Marker>
+
+                        )
+                      })}
+
+
+
                     </>
                   )
 

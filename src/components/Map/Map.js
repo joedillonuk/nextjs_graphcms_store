@@ -12,7 +12,7 @@ const { MapConsumer, MapContainer } = ReactLeaflet;
 
 const position = [51.505, -0.09]
 
-const Map = ({ children, className }) => {
+const Map = ({ children, className, ...rest }) => {
 
   let mapClassName = styles.map;
   if (className) {
@@ -31,7 +31,7 @@ const Map = ({ children, className }) => {
 
   return (
 
-    <MapContainer className={mapClassName} center={position} zoom={13} scrollWheelZoom={false}>
+    <MapContainer className={mapClassName} {...rest} >
       <MapConsumer>
         {(map) => children(ReactLeaflet, map) }
       </MapConsumer>
