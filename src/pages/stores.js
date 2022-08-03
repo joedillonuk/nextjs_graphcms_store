@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Head from 'next/head'
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
@@ -18,6 +18,9 @@ import styles from '@styles/Page.module.scss'
 
 
 export default function Stores({ storeLocations }) {
+  const [activeStore, setACtiveStore] = useState();
+
+  console.log('activeStore', activeStore);
 
 
   const features = points(storeLocations.map(({ location }) => {
@@ -42,6 +45,13 @@ export default function Stores({ storeLocations }) {
           <div className={styles.storesLocations}>
             <ul className={styles.locations}>
               {storeLocations.map(location => {
+                function handleOnClick() {
+                  setACtiveStore(location.id);
+                }
+
+
+
+
                 return (
                   <li key={location.id}>
                     <p className={styles.locationName}>
@@ -54,7 +64,7 @@ export default function Stores({ storeLocations }) {
                       {location.phoneNumber}
                     </p>
                     <p className={styles.locationDiscovery}>
-                      <button>
+                      <button onClick={handleOnClick}>
                         View on Map
                       </button>
                       <a href={`https://www.google.com/maps/dir//${location.location.latitude},${location.location.longitude}/@${location.location.latitude},${location.location.longitude},16z`} target="_blank" rel="noreferrer">
