@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import center from '@turf/center';
+import { points } from '@turf/helpers';
 
 
 import Layout from '@components/Layout';
@@ -16,6 +18,14 @@ import styles from '@styles/Page.module.scss'
 
 
 export default function Stores({ storeLocations }) {
+
+
+  const features = points(storeLocations.map(({ location }) => {
+    return [location.latitude, location.longitude]
+  }))
+
+  const [defaultLatitude, defaultLongitude] = center(features)?.geometry.coordinates;
+
 
   return (
     <Layout>
@@ -64,7 +74,7 @@ export default function Stores({ storeLocations }) {
             <div className={styles.storesMapContainer}>
 
               Map goes here
-              <Map className={styles.map} center={[0, 0]} zoom={4} scrollWheelZoom={false}>
+              <Map className={styles.map} center={[defaultLatitude, defaultLongitude]} zoom={12} scrollWheelZoom={false}>
 
                 {({ TileLayer, Marker, Popup }, map) => {
 
