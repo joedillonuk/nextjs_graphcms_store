@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head'
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
@@ -87,9 +87,18 @@ export default function Stores({ storeLocations }) {
               <Map className={styles.map} center={[defaultLatitude, defaultLongitude]} zoom={12} scrollWheelZoom={false}>
 
                 {({ TileLayer, Marker, Popup }, map) => {
+                  const MapEffect = () => {
+                    useEffect(() => {
+                        if ( !activeStore ) return;
+                        const { location } = storeLocations.find(({ id }) => id === activeStore);
+                        map.setView([location.latitude, location.longitude], 16.5)
+                    }, [activeStore])
+                    return null;
+                  }
 
                   return (
                     <>
+                    <MapEffect />
                       <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
