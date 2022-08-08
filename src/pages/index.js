@@ -75,7 +75,8 @@ export default function Home({ home, products }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }) {
+  console.log('locale', locale);
   const client = new ApolloClient({
     uri: 'https://api-eu-west-2.graphcms.com/v2/cl59yfpuk686r01t3fpmhggiq/master',
     cache: new InMemoryCache(),

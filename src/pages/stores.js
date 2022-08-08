@@ -20,8 +20,6 @@ import styles from '@styles/Page.module.scss'
 export default function Stores({ storeLocations }) {
   const [activeStore, setActiveStore] = useState();
 
-  console.log('activeStore', activeStore);
-
 
   const features = points(storeLocations.map(({ location }) => {
     return [location.latitude, location.longitude]

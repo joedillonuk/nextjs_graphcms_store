@@ -12,8 +12,7 @@ import Button from '@components/Button';
 import styles from '@styles/Page.module.scss'
 
 export default function Category( { category, products }) {
-  console.log('category', category)
-  console.log('products', products)
+
 
   return (
     <Layout>
