@@ -18,7 +18,7 @@ import styles from '@styles/Page.module.scss'
 
 
 export default function Stores({ storeLocations }) {
-  const [activeStore, setACtiveStore] = useState();
+  const [activeStore, setActiveStore] = useState();
 
   console.log('activeStore', activeStore);
 
@@ -46,7 +46,7 @@ export default function Stores({ storeLocations }) {
             <ul className={styles.locations}>
               {storeLocations.map(location => {
                 function handleOnClick() {
-                  setACtiveStore(location.id);
+                  setActiveStore(location.id);
                 }
 
 
