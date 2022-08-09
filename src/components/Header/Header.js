@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useSnipcart } from 'use-snipcart';
 
@@ -7,7 +8,11 @@ import Container from '@components/Container';
 import styles from './Header.module.scss';
 
 const Header = () => {
+  const { locale: activeLocale, locales, asPath } = useRouter();
   const { cart = {} } = useSnipcart();
+
+  const availalbeLocales = locales.filter(locale => locale !== activeLocale);
+
   console.log('cart', cart);
 
   return (
@@ -44,13 +49,19 @@ const Header = () => {
           </button>
         </p>
         <ul className={styles.headerLocales}>
-          <li>
-            <Link href="#">
-              <a>
-                ES
-              </a>
-            </Link>
-          </li>
+          {availalbeLocales.map(locale => {
+            return (
+              <li key={locale}>
+                <Link href={asPath} locale={locale}>
+                  <a>
+                    {locale.toUpperCase()}
+                  </a>
+                </Link>
+              </li>
+
+            )
+          })}
+
         </ul>
       </Container>
     </header>
