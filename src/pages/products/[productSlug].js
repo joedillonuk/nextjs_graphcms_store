@@ -47,7 +47,7 @@ export default function Product({ product }) {
   )
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, locale }) {
 
   const client = new ApolloClient({
     uri: 'https://api-eu-west-2.graphcms.com/v2/cl59yfpuk686r01t3fpmhggiq/master',
@@ -56,7 +56,7 @@ export async function getStaticProps({ params }) {
 
   const data = await client.query({
     query: gql`
-      query PageProduct($slug: String) {
+      query PageProduct($slug: String, $locale: Locale!) {
   product(where: {slug: $slug}) {
     id
     image
@@ -66,15 +66,30 @@ export async function getStaticProps({ params }) {
       html
     }
     slug
+    localizations(locales: [$locale]) {
+      description {
+        html
+      }
+      locale
+    }
   }
 }
     `,
     variables: {
-      slug: params.productSlug
+      slug: params.productSlug,
+      locale
     }
   });
 
-  const product = data.data.product;
+  let product = data.data.product;
+
+  if ( product.localizations.length > 0 ) {
+    product = {
+      ...product,
+      ...product.localizations[0]
+
+    }
+  }
 
   return {
     props: {

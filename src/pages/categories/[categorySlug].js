@@ -111,7 +111,7 @@ export async function getStaticProps({ params }) {
 }
 
 
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }) {
 
   const client = new ApolloClient({
     uri: 'https://api-eu-west-2.graphcms.com/v2/cl59yfpuk686r01t3fpmhggiq/master',
@@ -141,7 +141,17 @@ export async function getStaticPaths() {
   })
 
   return {
-    paths,
+    paths: [
+      ...paths,
+      ...paths.flatMap(path => {
+        return locales.map(locale => {
+          return {
+            ...path,
+            locale
+          }
+        })
+      })
+    ],
     fallback: false
   }
 }
