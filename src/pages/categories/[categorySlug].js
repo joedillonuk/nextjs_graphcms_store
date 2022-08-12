@@ -2,6 +2,8 @@ import Head from 'next/head'
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import Link from 'next/link';
 
+import {Cloudinary} from '@cloudinary/url-gen';
+
 
 
 import Layout from '@components/Layout';
@@ -11,8 +13,19 @@ import Button from '@components/Button';
 
 import styles from '@styles/Page.module.scss'
 
-export default function Category( { category, products }) {
 
+const cld = new Cloudinary({
+  cloud: {
+      cloudName: 'jofcloud'
+  },
+  url: {
+      secure: true
+  }
+});
+
+export default function Category( { category, products }) {
+  const url = cld.image(products[0].image.public_id).toURL();
+  console.log('url', url);
 
   return (
     <Layout>
