@@ -41,12 +41,16 @@ export default function Category( { category, products }) {
 
         <ul className={styles.products}>
           {products.map(product => {
+            const imageUrl = cld.image(product.image.public_id).quality('auto').format('auto').resize('w_900,h_900').toURL();
+
+
+
             return (
             <li key={product.id}>
               <Link href={`/products/${product.slug}`}>
             <a>
               <div className={styles.productImage}>
-              <img width={product.image.width}  height={product.image.height}  src={product.image.url} alt="" />
+              <img width="900" height="900" src={imageUrl} alt="" />
 
               </div>
               <h3 className={styles.productTitle}>
